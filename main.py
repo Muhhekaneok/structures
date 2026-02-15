@@ -65,6 +65,29 @@ class SmartTasker:
         else:
             print(f"Task with ID {task_id} was not found")
 
+    def add_category(self, name, parent_name=None):
+        if name in self.category_map:
+            print(f"Category '{name}' already exists")
+            return
+        new_category = CategoryNode(name)
+        self.category_map[name] = new_category
+        if parent_name:
+            parent = self.category_map.get(parent_name)
+            if not parent:
+                print(f"Parent category '{parent_name}' not found")
+                return
+            parent.children.append(new_category)
+        print(f"Category '{name}' was successfully added")
+
+    def print_categories(self):
+        if not self.tasks:
+            print("There are no categories to print")
+            return
+        sorted_categories = sorted(self.category_map.keys())
+        print(f"There are {len(sorted_categories)} categories:")
+        for category in sorted_categories:
+            print("\t-", category)
+
     def save_to_file(self):
         clean_tasks = {}
         for tid, data in self.tasks.items():
@@ -148,7 +171,7 @@ if __name__ == "__main__":
     algo_java = CategoryNode("Quick sort")
 
     cpp = CategoryNode("C++")
-    cpp_purpose = CategoryNode("Operation Systems") # todo how to [Operation Systems, Games]?
+    cpp_purpose = CategoryNode("Operation Systems")  # todo how to [Operation Systems, Games]?
     cpp_frameworks = CategoryNode("C++ Framework")
     opengl = CategoryNode("OpenGL")
     boost_asio = CategoryNode("Boost.Asio")
@@ -262,7 +285,6 @@ if __name__ == "__main__":
         task_manager.add_task("Find out how Docker works", 1, "Docker source")
         task_manager.add_task("Read about Kubernetes", 3, "Kubernetes source")
         task_manager.add_task("Programming: Principles and Practice Using C++", 3, "C++")
-
 
     app = TaskCLI(task_manager)
     app.run()

@@ -16,6 +16,8 @@ class TaskCLI:
 5. Find task by category
 6. Save tasks to file
 7. Load tasks from file
+8. Add category
+9. Show categories
 0. Exit
             """)
 
@@ -34,6 +36,10 @@ class TaskCLI:
                 self.task_manager.save_to_file()
             elif choice == "7":
                 self.task_manager.load_from_file()
+            elif choice == "8":
+                self.add_category_ui()
+            elif choice == "9":
+                self.task_manager.print_categories()
             elif choice == "0":
                 print("Exiting...")
                 break
@@ -55,3 +61,7 @@ class TaskCLI:
 
     def show_json(self):
         print(json.dumps(self.task_manager.tasks, ensure_ascii=False, indent=4))
+
+    def add_category_ui(self):
+        category = input("Enter category: ")
+        self.task_manager.add_category(category)
