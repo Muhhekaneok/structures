@@ -11,7 +11,7 @@ class SmartTasker:
     def __init__(self, category_map=None):
         self.tasks = {}
         self.counter = 1
-        self.filepath = "tasks.json"
+        self.filepath = ""
         self.category_map = category_map or {}
 
     def add_task(self, title, priority, category_name):
@@ -70,17 +70,40 @@ class SmartTasker:
             print(f"Category '{name}' already exists")
             return
         new_category = CategoryNode(name)
-        self.category_map[name] = new_category
         if parent_name:
             parent = self.category_map.get(parent_name)
             if not parent:
                 print(f"Parent category '{parent_name}' not found")
                 return
-            parent.children.append(new_category)
+            parent.add_child(new_category)
+        self.category_map[name] = new_category
         print(f"Category '{name}' was successfully added")
 
+    def delete_category(self, name):
+        if not name in self.category_map:
+            print(f"Category '{name}' not found")
+            return
+        category_node = self.category_map[name]
+        print(f"Category_node: {category_node}")
+        categories_to_delete = category_node.get_all_names()
+        print(f"Categories to delete: {categories_to_delete}")
+        tasks_to_delete = [
+            tid for tid, task in self.tasks.items() if task["category"] in categories_to_delete
+        ]
+        print(f"Tasks to delete: {tasks_to_delete}")
+        for tid in tasks_to_delete:
+            del self.tasks[tid]
+        parent = category_node.parent
+        if parent:
+            parent.children = [
+                child for child in parent.children if child.name != name
+            ]
+        for cat_name in categories_to_delete:
+            del self.category_map[cat_name]
+        print(f"Category '{name}' and related tasks were successfully deleted")
+
     def print_categories(self):
-        if not self.tasks:
+        if not self.category_map:
             print("There are no categories to print")
             return
         sorted_categories = sorted(self.category_map.keys())
@@ -89,35 +112,60 @@ class SmartTasker:
             print("\t-", category)
 
     def save_to_file(self):
-        clean_tasks = {}
-        for tid, data in self.tasks.items():
-            clean_tasks[tid] = data.copy()
-            clean_tasks[tid]["category"] = data["category"]
         filename = input("Name the file: ")
         self.filepath = filename
+        data = {
+            "categories": {},
+            "tasks": self.tasks
+        }
+        for name, node in self.category_map.items():
+            parent_name = node.parent.name if node.parent else None
+            data["categories"][name] = {
+                "parent": parent_name
+            }
         with open(self.filepath, "w", encoding="utf-8") as f:
-            json.dump(clean_tasks, f, ensure_ascii=False, indent=4)
-        print("The data has been saved to tasks.json")
+            json.dump(data, f, ensure_ascii=False, indent=4)
+        print(f"The data has been saved to '{filename}'")
 
     def load_from_file(self):
+        filename = input("Name the file: ")
+        self.filepath = filename
         if not os.path.exists(self.filepath):
-            print("The file doesn't exist")
+            print("File doesn't exist")
             return
         try:
             with open(self.filepath, "r", encoding="utf-8") as f:
-                content = f.read()
-                if not content:
-                    print("File is empty")
-                    return
-                data = json.loads(content)
-            for k, v in data.items():
-                self.tasks[int(k)] = v
+                data = json.load(f)
+            self.tasks.clear()
+            self.category_map.clear()
+            for name in data["categories"]:
+                self.category_map[name] = CategoryNode(name)
+            for name, info in data["categories"].items():
+                parent_name = info["parent"]
+                if parent_name:
+                    parent_node = self.category_map[parent_name]
+                    parent_node.add_child(self.category_map[name])
+            for tid, info in data["tasks"].items():
+                self.tasks[int(tid)] = info
 
             self.counter = max(self.tasks.keys()) + 1 if self.tasks else 1
 
             print(f"File has been loaded. Loaded {len(self.tasks)} tasks")
         except JSONDecodeError:
             print("File is damaged.")
+
+    def delete_json_file(self, json_file):
+        if not os.path.exists(json_file):
+            print(f"File '{json_file}' not found")
+            return
+        try:
+            if not json_file.endswith(".json"):
+                print("Only .json files are allowed")
+                return
+            os.remove(json_file)
+            print(f"JSON file '{json_file}' was deleted")
+        except Exception as e:
+            print(f"Error while deleting JSON file '{json_file}' -> {e}")
 
     def _find_by_category(self, category_name):
         if category_name not in self.category_map:
@@ -138,17 +186,6 @@ class SmartTasker:
             print("No task found")
 
     def find_task_by_category(self):
-        # while True:
-        #     category = input("Enter a category. Or enter 'Q' for exiting: ").strip()
-        #     if category.lower() == "q":
-        #         break
-        #     if category not in self.category_map:
-        #         answer = input("Invalid category. Try again? (Y/N): ").strip().lower()
-        #         if answer == "y":
-        #             continue
-        #         else:
-        #             break
-        #     self._find_by_category(category_name=category)
         category_name = input("Enter the category name: ")
         self._find_by_category(category_name=category_name)
 
@@ -171,7 +208,7 @@ if __name__ == "__main__":
     algo_java = CategoryNode("Quick sort")
 
     cpp = CategoryNode("C++")
-    cpp_purpose = CategoryNode("Operation Systems")  # todo how to [Operation Systems, Games]?
+    cpp_purpose = CategoryNode("Operation Systems")
     cpp_frameworks = CategoryNode("C++ Framework")
     opengl = CategoryNode("OpenGL")
     boost_asio = CategoryNode("Boost.Asio")
@@ -285,6 +322,7 @@ if __name__ == "__main__":
         task_manager.add_task("Find out how Docker works", 1, "Docker source")
         task_manager.add_task("Read about Kubernetes", 3, "Kubernetes source")
         task_manager.add_task("Programming: Principles and Practice Using C++", 3, "C++")
+        print()
 
     app = TaskCLI(task_manager)
     app.run()

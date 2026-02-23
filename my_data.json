@@ -1,0 +1,231 @@
+{
+    "categories": {
+        "Programming language": {
+            "parent": null
+        },
+        "Python": {
+            "parent": "Programming language"
+        },
+        "Big Data": {
+            "parent": "Python"
+        },
+        "Python Framework": {
+            "parent": "Big Data"
+        },
+        "FastAPI": {
+            "parent": "Python Framework"
+        },
+        "Django": {
+            "parent": "Python Framework"
+        },
+        "Flask": {
+            "parent": "Python Framework"
+        },
+        "Merge sort": {
+            "parent": "Big Data"
+        },
+        "Java": {
+            "parent": "Programming language"
+        },
+        "Fintech": {
+            "parent": "Java"
+        },
+        "Java Framework": {
+            "parent": "Fintech"
+        },
+        "Spring": {
+            "parent": "Java Framework"
+        },
+        "Quick sort": {
+            "parent": "Fintech"
+        },
+        "C++": {
+            "parent": "Programming language"
+        },
+        "Operation Systems": {
+            "parent": "C++"
+        },
+        "C++ Framework": {
+            "parent": "Operation Systems"
+        },
+        "OpenGL": {
+            "parent": "C++ Framework"
+        },
+        "Boost.Asio": {
+            "parent": "C++ Framework"
+        },
+        "Unreal Engine": {
+            "parent": "C++ Framework"
+        },
+        "Introsort": {
+            "parent": "Operation Systems"
+        },
+        "Language": {
+            "parent": null
+        },
+        "English": {
+            "parent": "Language"
+        },
+        "German": {
+            "parent": "Language"
+        },
+        "Books": {
+            "parent": null
+        },
+        "Linux book": {
+            "parent": "Books"
+        },
+        "Python book": {
+            "parent": "Books"
+        },
+        "Java book": {
+            "parent": "Books"
+        },
+        "SQL book": {
+            "parent": "Books"
+        },
+        "Postman source": {
+            "parent": "Books"
+        },
+        "Docker source": {
+            "parent": "Books"
+        },
+        "Kubernetes source": {
+            "parent": "Books"
+        },
+        "AI": {
+            "parent": null
+        },
+        "Computer Science": {
+            "parent": null
+        }
+    },
+    "tasks": {
+        "1": {
+            "title": "Learning English",
+            "priority": 2,
+            "category": "Language",
+            "time": "21:44:24"
+        },
+        "2": {
+            "title": "Deutsch lernen",
+            "priority": 4,
+            "category": "Language",
+            "time": "21:44:24"
+        },
+        "3": {
+            "title": "Practice Dolinguo daily ",
+            "priority": 2,
+            "category": "English",
+            "time": "21:44:24"
+        },
+        "4": {
+            "title": "Read 'Harry Potter' to the kids",
+            "priority": 3,
+            "category": "English",
+            "time": "21:44:24"
+        },
+        "5": {
+            "title": "Deutsch für Kinder",
+            "priority": 4,
+            "category": "German",
+            "time": "21:44:24"
+        },
+        "6": {
+            "title": "'How Linux Works' by Brian Ward",
+            "priority": 1,
+            "category": "Linux book",
+            "time": "21:44:24"
+        },
+        "7": {
+            "title": "Find out in PyCharm IDE",
+            "priority": 1,
+            "category": "Python",
+            "time": "21:44:24"
+        },
+        "8": {
+            "title": "Find out in Intellij IDEA IDE",
+            "priority": 1,
+            "category": "Java",
+            "time": "21:44:24"
+        },
+        "9": {
+            "title": "Make project with FastAPI",
+            "priority": 1,
+            "category": "Python Framework",
+            "time": "21:44:24"
+        },
+        "10": {
+            "title": "Read about Django",
+            "priority": 2,
+            "category": "Python Framework",
+            "time": "21:44:24"
+        },
+        "11": {
+            "title": "Read about Flask",
+            "priority": 2,
+            "category": "Python Framework",
+            "time": "21:44:24"
+        },
+        "12": {
+            "title": "Remember Java Spring",
+            "priority": 3,
+            "category": "Java Framework",
+            "time": "21:44:24"
+        },
+        "13": {
+            "title": "Practice in merge sort via Python",
+            "priority": 1,
+            "category": "Merge sort",
+            "time": "21:44:24"
+        },
+        "14": {
+            "title": "Make project with Postman",
+            "priority": 1,
+            "category": "Postman source",
+            "time": "21:44:24"
+        },
+        "15": {
+            "title": "Find out how Docker works",
+            "priority": 1,
+            "category": "Docker source",
+            "time": "21:44:24"
+        },
+        "16": {
+            "title": "Read about Kubernetes",
+            "priority": 3,
+            "category": "Kubernetes source",
+            "time": "21:44:24"
+        },
+        "17": {
+            "title": "Programming: Principles and Practice Using C++",
+            "priority": 3,
+            "category": "C++",
+            "time": "21:44:24"
+        },
+        "18": {
+            "title": "ChatGPT",
+            "priority": 1,
+            "category": "AI",
+            "time": "21:46:05"
+        },
+        "19": {
+            "title": "Gemini",
+            "priority": 1,
+            "category": "AI",
+            "time": "21:48:29"
+        },
+        "20": {
+            "title": "Grok",
+            "priority": 1,
+            "category": "AI",
+            "time": "21:51:11"
+        },
+        "21": {
+            "title": "The art of programming",
+            "priority": 1,
+            "category": "Computer Science",
+            "time": "10:10:00"
+        }
+    }
+}

@@ -13,3 +13,10 @@ class CategoryNode:
         for child in self.children:
             names.extend(child.get_all_names())
         return names
+
+    def to_dict(self):
+        return {
+            "name": self.name,
+            "parent": self.parent.name if self.parent else None,
+            "children": [child.name for child in self.children]
+        }
